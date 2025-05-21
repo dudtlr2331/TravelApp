@@ -1,0 +1,142 @@
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+}
+
+/* 헤더 */
+header {
+    background-color: #ffffff;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #006699;
+    cursor: pointer;
+}
+
+header p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #888;
+}
+
+/* 슬라이더 (main.jsp) */
+.slider {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.slide {
+    flex: 0 0 150px;
+    height: 100px;
+    background-color: #ccc;
+    text-align: center;
+    line-height: 100px;
+    border-radius: 10px;
+}
+
+/* 카테고리 섹션 */
+section.카테고리 {
+    margin: 20px 0;
+}
+
+section.카테고리 h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+section.카테고리 .items {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+section.카테고리 button {
+    padding: 5px 10px;
+    font-size: 18px;
+    background-color: #eee;
+    border: none;
+    cursor: pointer;
+}
+
+/* 검색 결과 (search.jsp) */
+.result-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.result-item {
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+/* 상세 페이지 (detail.jsp) */
+main h2 {
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+main p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+main section {
+    margin-top: 30px;
+}
+
+main section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+main section div {
+    background-color: #eee;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.nearby {
+    display: flex;
+    gap: 10px;
+}
+
+.nearby > div {
+    flex: 1;
+    background-color: #ddd;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* 푸터 */
+footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+
+footer img {
+    width: 200px;
+    margin-top: 10px;
+}
