@@ -9,6 +9,7 @@ public class TravelTO {
     private int no;
     private String district;
     private String title;
+    private String description;
     private String address;
     private String phone;
 }
