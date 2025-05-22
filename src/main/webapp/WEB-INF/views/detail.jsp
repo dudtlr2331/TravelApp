@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>상세정보</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <header>
@@ -12,12 +12,12 @@
 </header>
 
 <main>
-    <h2>관광지명</h2>
-    <p>주소</p>
+    <h2>${place.title}</h2>  <!-- 관광지명 -->
+    <p>${place.address}</p>  <!-- 주소 -->
 
     <section>
         <h3>상세정보</h3>
-        <p>여기에 상세정보가 들어갑니다.</p>
+        <p>${place.description}</p>  <!-- 설명 -->
     </section>
 
     <section>
