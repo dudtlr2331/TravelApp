@@ -1,0 +1,143 @@
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+}
+
+/* 공통 헤더 */
+.site-header {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+}
+
+.logo-img {
+    max-height: 80px;
+    display: block;
+}
+
+/* 검색창 */
+.search-section {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.search-section h3 {
+    margin-bottom: 10px;
+}
+
+.search-section form {
+    display: flex;
+    gap: 8px;
+}
+
+.search-section input,
+.search-section select,
+.search-section button {
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* 상세 이미지 왼쪽 정렬 */
+.left-image {
+    width: 300px;
+    float: left;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+
+/* 상세 본문 */
+.detail-main {
+    padding: 24px;
+
+}
+
+.detail-main h2 {
+    font-size: 22px;
+    margin-top: 0;
+}
+
+.detail-main p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+    max-width: 800px;
+    line-height: 1.8;
+    word-break: keep-all;
+
+}
+
+.detail-main section {
+    margin-top: 30px;
+}
+
+.detail-main section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.detail-main section div {
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* 주변 관광지 */
+.nearby-grid {
+    background-color: #eee;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0 24px;
+}
+
+.nearby-card {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.nearby-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.nearby-card p {
+    padding: 8px;
+    font-size: 14px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 푸터 */
+.site-footer {
+    padding: 16px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    margin-top: 40px;
+}
+
+.site-footer img {
+    width: 200px;
+    margin-top: 10px;
+}

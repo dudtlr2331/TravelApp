@@ -3,23 +3,6 @@
 <%@ page import="org.example.travelapp.model.TravelTO" %>
 <%@ page import="java.util.List" %>
 
-<%--<%--%>
-<%--  List<TravelTO> lists = (List<TravelTO>) request.getAttribute("lists");--%>
-<%--  StringBuilder sbHtml = new StringBuilder();--%>
-
-<%--  if (lists != null && !lists.isEmpty()) {--%>
-<%--    for (TravelTO to : lists) {--%>
-<%--      sbHtml.append("<div class='result-list'>");--%>
-<%--      sbHtml.append("<div class='result-item'>" + to.getTitle() + "</div>");--%>
-<%--      sbHtml.append("<div class='result-item'>" + to.getDescription() + "</div>");--%>
-<%--      sbHtml.append("<div class='result-item'>" + to.getAddress() + "</div>");--%>
-<%--      sbHtml.append("</div>");--%>
-<%--    }--%>
-<%--  } else {--%>
-<%--    sbHtml.append("<p>검색 결과가 없습니다.</p>");--%>
-<%--  }--%>
-<%--%>--%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -37,6 +20,7 @@
     <select id="searchType" name="type">
       <option value="title">제목</option>
       <option value="district">지역</option>
+      <option value="description">키워드</option>
     </select>
 
     <input type="text" id="searchKeyword" name="keyword" placeholder="검색어를 입력하세요">
@@ -46,9 +30,13 @@
   <section id="슬라이드">
     <!-- 썸네일 이미지 자리 -->
     <div class="slider">
-      <div class="slide">[슬라이드1]</div>
-      <div class="slide">[슬라이드2]</div>
-      <div class="slide">[슬라이드3]</div>
+      <button id="slidePrev" class="slide-btn">←</button>
+      <div class="slide-slot" id="slot0"></div>
+      <div class="slide-slot" id="slot1"></div>
+      <div class="slide-slot" id="slot2"></div>
+      <div class="slide-slot" id="slot3"></div>
+      <div class="slide-slot" id="slot4"></div>
+      <button id="slideNext" class="slide-btn">→</button>
     </div>
   </section>
 
@@ -63,7 +51,7 @@
       %>
       <div class="item">
         <a href="/detail/<%= to.getNo() %>">
-          <img src="<%= imageUrl %>" style="width:150px; height:100px;">
+          <img src="<%= imageUrl %>" onerror="this.src='/images/default.jpg'" style="width:150px; height:100px;">
           <p><%= to.getTitle() %></p>
         </a>
       </div>
@@ -85,7 +73,7 @@
       %>
       <div class="item">
         <a href="/detail?no=<%= to.getNo() %>">
-          <img src="<%= imageUrl %>" style="width:150px; height:100px;">
+          <img src="<%= imageUrl %>" onerror="this.src='/images/default.jpg'" style="width:150px; height:100px;">
           <p><%= to.getDistrict() %> - <%= to.getTitle() %></p>
         </a>
       </div>

@@ -31,12 +31,22 @@ public class TravelDAO {
     }
 
     public List<TravelTO> searchByTitle(String title) {
-        String sql = "select title, description, address from travel where title like ?";
+        String sql = "select no, title, description, address from travel where title like ?";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), "%" + title + "%");
     }
 
+    public List<TravelTO> searchDescription(String description) {
+        String sql = "select no, district, title, description, address, phone from travel where description like ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), "%" + description + "%");
+    }
+
     public TravelTO travelDetails(int no) {
-        String sql = "select no, district, title, description, address, phone from travel WHERE no = ?";
+        String sql = "SELECT no, district, title, description, address, phone FROM travel WHERE no = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TravelTO.class), no);
+    }
+
+    public List<TravelTO> getNearbyByDistrict(String district, int excludeNo) {
+        String sql = "SELECT no, title, district, description, address, phone FROM travel WHERE district = ? AND no != ? LIMIT 5";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), district, excludeNo);
     }
 }

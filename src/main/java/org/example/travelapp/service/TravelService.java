@@ -32,7 +32,15 @@ public class TravelService {
         return dao.searchByTitle(title);
     }
 
+    public List<TravelTO> searchDescription(String description) {
+        return dao.searchDescription(description);
+    }
+
     public TravelTO getDetail(int no) {
         return dao.travelDetails(no);
+    }
+
+    public List<TravelTO> getNearbyByDistrict(String district, int excludeNo) {
+        return dao.getNearbyByDistrict(district, excludeNo);
     }
 }

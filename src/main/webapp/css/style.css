@@ -35,18 +35,92 @@ header p {
 /* 슬라이더 (main.jsp) */
 .slider {
     display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    margin: 20px 0;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 400px;
+    margin-top: 30px;
 }
 
-.slide {
-    flex: 0 0 150px;
-    height: 100px;
-    background-color: #ccc;
-    text-align: center;
-    line-height: 100px;
+/* 메인 슬롯 */
+.slide-slot {
+    background-color: #eee;
     border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 100px;
+    transition: all 0.4s ease;
+    align-self: flex-end;
+}
+
+/* 작은 슬롯 */
+#slot0, #slot1, #slot3, #slot4 {
+    width: 240px;
+    height: 160px;
+    font-size: 14px;
+    line-height: 120px;
+    align-self: flex-end;
+}
+
+/* 가운데 슬롯 (크게) */
+#slot2 {
+    width: 450px;
+    height: 300px;
+    font-size: 20px;
+    line-height: 160px;
+    background-color: #ddd;
+}
+
+.slide-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.slide-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 이미지 안 텍스트 */
+.image-label {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 18px;
+    border-radius: 4px;
+    max-width: 80%;
+    line-height: 1.2;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.slide-btn {
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+}
+
+.slide-btn:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+.slide-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
 }
 
 /* 카테고리 섹션 */
@@ -139,4 +213,56 @@ footer {
 footer img {
     width: 200px;
     margin-top: 10px;
+}
+
+/* search 페이지 */
+.items {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    justify-content: center; /* 가로 방향 중앙 정렬 */
+    align-items: center; /* 세로 방향 중앙 정렬 (선택 사항) */
+}
+
+.item {
+    margin-right: 20px;
+    width: 20%; /* 부모 요소(.items) 너비의 20% */
+    max-width: 250px; /* 이미지의 최대 너비 제한 (원래 크기 이상으로 커지지 않도록) */
+    flex-shrink: 0; /* item 요소의 크기가 줄어들지 않도록 설정 */
+}
+
+.item img {
+    display: block; /* 이미지 주변의 불필요한 공간 제거 */
+    width: 100%; /* 부모 요소(.item) 너비에 맞춰 이미지 가로 크기 조정 */
+    height: auto; /* 원래 비율 유지 */
+    aspect-ratio: 1 / 1; /* 가로 세로 비율을 1:1로 설정 (정사각형) */
+    object-fit: contain; /* 이미지가 요소 내부에 맞춰 비율 유지하며 모두 표시 */
+}
+
+.result-list {
+    flex-grow: 1;
+}
+
+.result-description {
+    overflow: hidden; /* 넘치는 내용을 숨김 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 원하는 줄 수 */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.result-address {
+    font-size: 0.9em;  /* 글자 크기를 부모 객체 대비 0.9 배로 변경 */
+    color: #dc7928; /* 글자색을 더 옅은 회색으로 변경 */
+}
+
+.result-title + .result-description {
+    margin-top: 1px; /* 원하는 공백 크기로 조정 (예: 5px) */
+}
+
+.result-description + .result-address {
+    margin-top: 20px; /* 원하는 공백 크기로 조정 (예: 5px) */
 }
