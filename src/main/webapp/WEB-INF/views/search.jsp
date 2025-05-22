@@ -1,10 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ page import="org.example.travelapp.model.TravelTO" %>
+<%@ page import="java.util.List" %>
+
+<%
+    List<TravelTO> lists = (List<TravelTO>) request.getAttribute("lists");
+    StringBuilder sbHtml = new StringBuilder();
+
+    if (lists != null && !lists.isEmpty()) {
+        for (TravelTO to : lists) {
+            sbHtml.append("<div class='result-list'>");
+            sbHtml.append("<div class='result-item'>" + to.getTitle() + "</div>");
+            sbHtml.append("<div class='result-item'>" + to.getDescription() + "</div>");
+            sbHtml.append("<div class='result-item'>" + to.getAddress() + "</div>");
+            sbHtml.append("</div>");
+        }
+    } else {
+        sbHtml.append("<p>검색 결과가 없습니다.</p>");
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>검색</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <header>
@@ -13,13 +34,8 @@
 </header>
 
 <main>
-    <h2>‘000’ 검색결과</h2>
-    <div class="result-list">
-        <div class="result-item">결과1</div>
-        <div class="result-item">결과2</div>
-        <div class="result-item">결과3</div>
-        <div class="result-item">결과4</div>
-    </div>
+    <h2><%= request.getAttribute("keyword") %> 검색 결과</h2>
+    <%= sbHtml %>
 </main>
 
 <footer>
