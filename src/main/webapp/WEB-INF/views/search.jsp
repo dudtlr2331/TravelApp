@@ -43,33 +43,17 @@
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
-<header>
-    <h1>로고</h1>
-    <p>* 정렬기 // #추천순 카테고리 시스템</p>
 
-</header>
+<jsp:include page="header.jsp" />
 
 <main>
-    <%--    내부 form 을 중앙 정렬 시키기위해 div 만듦--%>
-    <div id="searchDiv" style="align-items: center; justify-content: center; display: flex;">
-        <form id="searchForm" >
-            <select id="searchType" name="type">
-                <option value="title">제목</option>
-                <option value="district">지역</option>
-            </select>
-            <input type="text" id="searchKeyword" name="keyword" placeholder="검색어를 입력하세요">
-            <button type="submit">검색</button>
-        </form>
-    </div>
     <h2><%= request.getAttribute("keyword") %> 검색 결과</h2>
 
     <%= sbHtml %>
 </main>
 
-<footer>
-    <p>* info</p>
-    <img src="footer-img.png" alt="푸터 이미지">
-</footer>
+<jsp:include page="footer.jsp" />
+
 <%-- 검색 결과를 전송하기 위한 js 사용--%>
 <script src="/js/search.js"></script>
 </body>

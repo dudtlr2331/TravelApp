@@ -5,13 +5,12 @@ import org.example.travelapp.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class TravelController {
@@ -29,6 +28,26 @@ public class TravelController {
 
         return "main";
     }
+
+    // 메인 슬라이드 영역
+    @GetMapping("/api/slider")
+    @ResponseBody
+    public List<Map<String, Object>> getSliderData() {
+        List<TravelTO> list = service.getTopSlides(); // DAO에서 상위 5~6개 가져오도록
+        List<Map<String, Object>> response = new ArrayList<>();
+
+        for (TravelTO to : list) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("no", to.getNo());
+            item.put("img", "/images/travel_" + to.getNo() + ".jpg");
+            item.put("title", to.getTitle());
+            item.put("desc", to.getDescription());
+            response.add(item);
+        }
+
+        return response;
+    }
+
 
     @GetMapping("/search/{type}/{keyword}")
     public String search(
@@ -84,7 +103,14 @@ public class TravelController {
             model.addAttribute("keyword", keyword);
             model.addAttribute("type", type);
         }
-
         return "detail";
+    }
+
+    @GetMapping("/search/all/{keyword}")
+    public String searchAll(@PathVariable String keyword, Model model) {
+        List<TravelTO> results = service.searchAllFields(keyword);
+        model.addAttribute("lists", results);
+        model.addAttribute("keyword", keyword);
+        return "search";
     }
 }

@@ -16,12 +16,17 @@ public class TravelDAO {
     private JdbcTemplate jdbcTemplate;
 
     public List<TravelTO> mainListByTitle() {
-        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY title LIMIT 10";
+        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY title LIMIT 8";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
     }
 
     public List<TravelTO> mainListByDistrict() {
-        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY district LIMIT 10";
+        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY district LIMIT 8";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
+    }
+
+    public List<TravelTO> getTopSlides() {  /* 메인 슬라이드 영역 */
+        String sql = "SELECT no, title, description FROM travel ORDER BY no LIMIT 6";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
     }
 
@@ -48,5 +53,11 @@ public class TravelDAO {
     public List<TravelTO> getNearbyByDistrict(String district, int excludeNo) {
         String sql = "SELECT no, title, district, description, address, phone FROM travel WHERE district = ? AND no != ? LIMIT 5";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), district, excludeNo);
+    }
+
+    public List<TravelTO> searchAllFields(String keyword) {
+        String sql = "SELECT * FROM travel WHERE title LIKE ? OR district LIKE ? OR description LIKE ?";
+        String kw = "%" + keyword + "%";
+        return jdbcTemplate.query( sql, new BeanPropertyRowMapper<>(TravelTO.class), kw, kw, kw );
     }
 }

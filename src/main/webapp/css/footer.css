@@ -1,0 +1,33 @@
+/* 푸터 */
+footer {
+    background-color: #5e5e5e;
+    color: #eee;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid #444;
+
+    width: 100vw;                   /* 전체 너비 */
+    margin-left: calc(-50vw + 50%); /* 좌우 여백 보정 */
+}
+
+.info p {
+    margin: 6px 0;
+}
+
+.team {
+    color: #ccc;
+    font-weight: 300;
+    font-size: 13px;
+}
+
+link {
+    margin-top: 10px;
+}
+
+footer a {
+    color: #90caf9;
+    text-decoration: none;
+    font-weight: bold;
+}

@@ -24,6 +24,11 @@ public class TravelService {
         return dao.mainListByDistrict();
     }
 
+    // 메인 슬라이드
+    public List<TravelTO> getTopSlides() {
+        return dao.getTopSlides();
+    }
+
     public List<TravelTO> searchDistrict(String strDistrict) {
         return dao.travelSearchDistrict(strDistrict);
     }
@@ -42,5 +47,9 @@ public class TravelService {
 
     public List<TravelTO> getNearbyByDistrict(String district, int excludeNo) {
         return dao.getNearbyByDistrict(district, excludeNo);
+    }
+
+    public List<TravelTO> searchAllFields(String keyword) {
+        return dao.searchAllFields(keyword);
     }
 }
