@@ -1,0 +1,38 @@
+package org.example.travelapp.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+public class TravelListTO {
+    private int cpage;
+    private int recordPerPage;
+    private int pagePerBlock;
+    private int totalPage;
+    private int totalRecord;
+    private int startBlock;
+    private int endBlock;
+
+    private List<TravelTO> boardLists;
+
+    public TravelListTO(){
+        this.recordPerPage = 5;
+        this.pagePerBlock = 5;
+    }
+
+    public void setTotalRecord(int totalRecord) {
+        this.totalRecord = totalRecord;
+
+        // 총 페이지 수 계산
+        this.totalPage = (int)Math.ceil((double)this.totalRecord / this.recordPerPage);
+
+        // 페이지 블럭 계산
+        int block = (int)Math.ceil((double)this.cpage / this.pagePerBlock);
+        this.startBlock = (block - 1) * this.pagePerBlock + 1;
+        this.endBlock = Math.min(startBlock + pagePerBlock - 1, totalPage);
+    }
+}
+
