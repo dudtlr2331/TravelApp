@@ -2,9 +2,14 @@
 
 <%@ page import="org.example.travelapp.model.TravelTO" %>
 <%@ page import="java.util.List" %>
+<%@ page import="org.example.travelapp.model.TravelListTO" %>
 
 <%
-    List<TravelTO> lists = (List<TravelTO>) request.getAttribute("lists");
+    TravelListTO listTO = (TravelListTO) request.getAttribute("lists");
+    List<TravelTO> lists = (List<TravelTO>) listTO.getBoardLists();
+
+    String keyword = (String) request.getAttribute("keyword");
+
     StringBuilder sbHtml = new StringBuilder();
 
     if (lists != null && !lists.isEmpty()) {
@@ -33,6 +38,66 @@
     } else {
         sbHtml.append("<p>검색 결과가 없습니다.</p>");
     }
+
+    StringBuilder listSbHtml = new StringBuilder();
+
+
+    if(listTO != null && listTO.getTotalRecord() > 0){
+        int totalPage = listTO.getTotalPage();
+        int startBlock = listTO.getStartBlock();
+        int endBlock = listTO.getEndBlock();
+        int cpage = listTO.getCpage();
+        int pagePerBlock = listTO.getPagePerBlock();
+
+        System.out.println("cpage : " + cpage);
+        System.out.println("totalPage : " + totalPage);
+        System.out.println("startBlock : " + startBlock);
+        System.out.println("endBlock : " + endBlock);
+        System.out.println("pageperblock : " + pagePerBlock);
+
+        listSbHtml.append("<div class='pagination'>");
+
+        if ( startBlock == 1 ) {
+            listSbHtml.append( "<span><a>&lt;&lt;</a></span>" );
+        } else {
+            listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( startBlock - pagePerBlock ) + "'>&lt;&lt;</a></span>" );
+        }
+
+        listSbHtml.append( "&nbsp;" );
+
+        if( cpage == 1 ) {
+            listSbHtml.append( "<span><a>&lt;</a></span>" );
+        } else {
+            listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( cpage - 1 )+ "'>&lt;</a></span>" );
+        }
+
+        listSbHtml.append( "&nbsp;&nbsp;" );
+
+        for ( int i=startBlock ; i<=endBlock ; i++ ) {
+            if ( i == cpage ) {
+                listSbHtml.append( "<span><a>[ " + i + " ]</a></span>" );
+            } else {
+                listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + i + "'> " + i + " </a></span>" );
+            }
+        }
+
+        listSbHtml.append( "&nbsp;&nbsp;" );
+
+        if( cpage == totalPage ) {
+            listSbHtml.append( "<span><a>&gt;</a></span>" );
+        } else {
+            listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( cpage + 1 )+ "'>&gt;</a></span>" );
+        }
+
+        listSbHtml.append( "&nbsp;" );
+
+        if( endBlock == totalPage ) {
+            listSbHtml.append( "<span><a>&gt;&gt;</a></span>" );
+        } else {
+            listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( startBlock + pagePerBlock ) + "'>&gt;&gt;</a></span>" );
+        }
+        listSbHtml.append("</div>");
+    }
 %>
 
 <!DOCTYPE html>
@@ -50,6 +115,7 @@
     <h2><%= request.getAttribute("keyword") %> 검색 결과</h2>
 
     <%= sbHtml %>
+    <%= listSbHtml %>
 </main>
 
 <jsp:include page="footer.jsp" />

@@ -1,5 +1,6 @@
 package org.example.travelapp.controller;
 
+import org.example.travelapp.model.TravelListTO;
 import org.example.travelapp.model.TravelTO;
 import org.example.travelapp.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,14 @@ public class TravelController {
         return response;
     }
 
+    @GetMapping("/search/all/{keyword}")
+    public String searchAll(@PathVariable String keyword, @RequestParam(value = "cpage", defaultValue="1") int cpage, Model model) {
+        TravelListTO lists = service.searchAllFields(keyword, cpage);
+
+        model.addAttribute("lists", lists);
+        model.addAttribute("keyword", keyword);
+        return "search";
+    }
 
     @GetMapping("/search/{type}/{keyword}")
     public String search(
@@ -104,13 +113,5 @@ public class TravelController {
             model.addAttribute("type", type);
         }
         return "detail";
-    }
-
-    @GetMapping("/search/all/{keyword}")
-    public String searchAll(@PathVariable String keyword, Model model) {
-        List<TravelTO> results = service.searchAllFields(keyword);
-        model.addAttribute("lists", results);
-        model.addAttribute("keyword", keyword);
-        return "search";
     }
 }

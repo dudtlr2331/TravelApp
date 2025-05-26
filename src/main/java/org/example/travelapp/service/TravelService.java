@@ -1,6 +1,7 @@
 package org.example.travelapp.service;
 
 import org.example.travelapp.model.TravelDAO;
+import org.example.travelapp.model.TravelListTO;
 import org.example.travelapp.model.TravelTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,14 @@ public class TravelService {
         return dao.getNearbyByDistrict(district, excludeNo);
     }
 
-    public List<TravelTO> searchAllFields(String keyword) {
-        return dao.searchAllFields(keyword);
+    public TravelListTO searchAllFields(String keyword, int cpage) {
+        int totalRecord = dao.getTotalRecordByAll(keyword);
+        TravelListTO listTO = new TravelListTO();
+        listTO.setCpage(cpage);
+        listTO.setTotalRecord(totalRecord);
+        int startRow = (cpage - 1) * listTO.getRecordPerPage();
+
+        listTO.setBoardLists(dao.searchAllFields(keyword, startRow, listTO.getRecordPerPage()));
+        return listTO;
     }
 }

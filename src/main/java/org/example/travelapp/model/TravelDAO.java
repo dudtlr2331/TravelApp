@@ -55,9 +55,15 @@ public class TravelDAO {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), district, excludeNo);
     }
 
-    public List<TravelTO> searchAllFields(String keyword) {
-        String sql = "SELECT * FROM travel WHERE title LIKE ? OR district LIKE ? OR description LIKE ?";
+    public List<TravelTO> searchAllFields(String keyword, int startRow, int recordPerPage) {
+        String sql = "SELECT * FROM travel WHERE title LIKE ? OR district LIKE ? OR description LIKE ? LIMIT ?, ?";
         String kw = "%" + keyword + "%";
-        return jdbcTemplate.query( sql, new BeanPropertyRowMapper<>(TravelTO.class), kw, kw, kw );
+        return jdbcTemplate.query( sql, new BeanPropertyRowMapper<>(TravelTO.class), kw, kw, kw , startRow, recordPerPage);
+    }
+
+    public int getTotalRecordByAll(String keyword) {
+        String sql = "SELECT COUNT(*) FROM travel WHERE title LIKE ? OR district LIKE ? OR description LIKE ?";
+        String kw = "%" + keyword + "%";
+        return jdbcTemplate.queryForObject(sql, Integer.class, kw, kw, kw);
     }
 }
