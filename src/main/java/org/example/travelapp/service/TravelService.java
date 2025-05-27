@@ -60,7 +60,7 @@ public class TravelService {
 
     public List<TravelTO> getNearbyPlacesSortedByDistance(TravelTO centerPlace, List<TravelTO> allPlaces) {
         try {
-            double[] centerCoords = getCoordinatesFromAddress(centerPlace.getAddress());
+            double[] centerCoords = getOrUpdateCoordinates(centerPlace);
             if (centerCoords != null) {
                 centerPlace.setLatitude(centerCoords[0]);
                 centerPlace.setLongitude(centerCoords[1]);
@@ -70,7 +70,7 @@ public class TravelService {
             for (TravelTO place : allPlaces) {
                 if (place.getNo() == centerPlace.getNo()) continue;
 
-                double[] coords = getCoordinatesFromAddress(place.getAddress());
+                double[] coords = getOrUpdateCoordinates(place);
                 if (coords != null) {
                     place.setLatitude(coords[0]);
                     place.setLongitude(coords[1]);
@@ -94,6 +94,26 @@ public class TravelService {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    public double[] getOrUpdateCoordinates(TravelTO place) {
+        // 이미 좌표가 있는 경우 그대로 반환
+        if (place.getLatitude() != 0 && place.getLongitude() != 0) {
+            return new double[]{ place.getLatitude(), place.getLongitude() };
+        }
+
+        // 좌표 조회 API 호출
+        double[] coords = getCoordinatesFromAddress(place.getAddress());
+        if (coords != null) {
+            // DB 저장
+            dao.updateCoordinates(place.getNo(), coords[0], coords[1]);
+
+            // 객체에 반영
+            place.setLatitude(coords[0]);
+            place.setLongitude(coords[1]);
+        }
+
+        return coords;
     }
 
     private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
@@ -135,12 +155,28 @@ public class TravelService {
         return dao.travelDetails(no);
     }
 
-    public List<TravelTO> getAllPlaces() {
-        return dao.getAllPlaces();
+    public List<TravelTO> getAllPlaces(String district) {
+        return dao.getAllPlaces(district);
     }
 
     public List<TravelTO> getNearbyByDistrict(String district, int excludeNo) {
         return dao.getNearbyByDistrict(district, excludeNo);
+    }
+
+    public List<TravelTO> searchDistrictLimit(String strDistrict) {
+        return dao.travelSearchDistrictLimit(strDistrict);
+    }
+
+    public TravelListTO selectAll( int cpage ) {
+        int totalRecord = dao.getTotalAll();
+        TravelListTO listTO = new TravelListTO();
+        listTO.setCpage(cpage);
+        listTO.setTotalRecord(totalRecord);
+        int startRow = (cpage - 1) * listTO.getRecordPerPage();
+
+        listTO.setBoardLists(dao.selectAll( startRow, listTO.getRecordPerPage()));
+
+        return listTO;
     }
 
     public TravelListTO searchAllFields(String keyword, int cpage) {
@@ -153,4 +189,5 @@ public class TravelService {
         listTO.setBoardLists(dao.searchAllFields(keyword, startRow, listTO.getRecordPerPage()));
         return listTO;
     }
+
 }

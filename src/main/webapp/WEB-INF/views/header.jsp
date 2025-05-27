@@ -12,7 +12,7 @@
 
         <nav class="nav-menu">
             <a href="/main">홈</a>
-            <a href="#">전체보기</a>
+            <a href="/all">전체보기</a>
         </nav>
 
         <form class="nav-search" id="navSearchForm" onsubmit="return navSearch()">

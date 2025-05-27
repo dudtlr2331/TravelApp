@@ -93,7 +93,7 @@ public class TravelController {
         model.addAttribute("place", to);
 
         // 2. Kakao 기반 거리순 주변 관광지 정렬
-        List<TravelTO> allPlaces = service.getAllPlaces(); // 모든 관광지 DB에서 가져오기
+        List<TravelTO> allPlaces = service.getAllPlaces(to.getDistrict()); // 모든 관광지 DB에서 가져오기
         List<TravelTO> nearbyList = service.getNearbyPlacesSortedByDistance(to, allPlaces); // 20km 이내 + 거리순
         model.addAttribute("nearbyList", nearbyList);
 
@@ -114,5 +114,33 @@ public class TravelController {
             model.addAttribute("type", type);
         }
         return "detail";
+    }
+
+    @RequestMapping( "/all" )
+    public String all( @RequestParam(value = "cpage", defaultValue="1") int cpage, Model model ) {
+        TravelListTO lists = service.selectAll( cpage );
+        model.addAttribute("lists", lists);
+
+        return "all";
+    }
+
+    @GetMapping("/api/district/{keyword}")
+    @ResponseBody
+    public List<TravelTO> searchDistrictAjax(@PathVariable String keyword) {
+        return service.searchDistrictLimit(keyword);
+    }
+
+    @GetMapping("/search/district/{keyword}")
+    public String searchDistrict(@PathVariable String keyword, Model model) {
+        List<TravelTO> list = service.searchDistrict(keyword);
+
+        TravelListTO listTO = new TravelListTO();
+        listTO.setCpage(1);
+        listTO.setTotalRecord(list.size());
+        listTO.setBoardLists(list);
+
+        model.addAttribute("lists", listTO);
+        model.addAttribute("keyword", keyword);
+        return "search";
     }
 }

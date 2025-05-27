@@ -50,9 +50,9 @@ public class TravelDAO {
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TravelTO.class), no);
     }
 
-    public List<TravelTO> getAllPlaces() {
-        String sql = "SELECT no, district, title, description, address, phone FROM travel";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
+    public List<TravelTO> getAllPlaces(String district) {
+        String sql = "SELECT no, district, title, description, address, phone FROM travel where district = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), district);
     }
 
     public List<TravelTO> getNearbyByDistrict(String district, int excludeNo) {
@@ -70,5 +70,25 @@ public class TravelDAO {
         String sql = "SELECT COUNT(*) FROM travel WHERE title LIKE ? OR district LIKE ? OR description LIKE ?";
         String kw = "%" + keyword + "%";
         return jdbcTemplate.queryForObject(sql, Integer.class, kw, kw, kw);
+    }
+
+    public List<TravelTO> selectAll( int startRow, int recordPerPage ) {
+        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY no LIMIT ?, ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), startRow, recordPerPage );
+    }
+
+    public int getTotalAll() {
+        String sql = "SELECT COUNT(*) FROM travel";
+        return jdbcTemplate.queryForObject(sql, Integer.class );
+    }
+
+    public List<TravelTO> travelSearchDistrictLimit(String strDistrict){
+        String sql = "select no, district, title, description, address, phone from travel where district like ? Limit 6";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<TravelTO>(TravelTO.class), "%"+strDistrict+"%");
+    }
+
+    public int updateCoordinates(int no, double latitude, double longitude) {
+        String sql = "UPDATE travel SET latitude = ?, longitude = ? WHERE no = ?";
+        return jdbcTemplate.update(sql, latitude, longitude, no);
     }
 }

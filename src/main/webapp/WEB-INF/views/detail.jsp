@@ -67,7 +67,7 @@
 
                     // 마커에 mouseover 이벤트 리스너 추가
                     kakao.maps.event.addListener(marker, 'mouseover', function() {
-                        infoWindow.setContent('<div style="padding:5px; width: 100%;"><b>' + '${place.title}' + '</b><br>${place.address}</div>');
+                        infoWindow.setContent('<div style="padding:5px; width: 250px;"><b>' + '${place.title}' + '</b><br>${place.address}</div>');
                         infoWindow.open(map, this);
                     });
 
@@ -94,7 +94,7 @@
                         console.log("nearAdd : " +(i+1)+ " 번째 : " + nearAdd[i]);
                         // 마커에 mouseover 이벤트 리스너 추가
                         kakao.maps.event.addListener(nearMarker, 'mouseover', function() {
-                            infoWindow.setContent('<div style="padding:5px; width: auto;"><b>' + nearbyInfo[i].title + '<b><br>' + nearbyInfo[i].address + '</div>');
+                            infoWindow.setContent('<div style="padding:5px; width: 250px;"><b>' + nearbyInfo[i].title + '<b><br>' + nearbyInfo[i].address + '</div>');
                             infoWindow.open(map, this);
                         });
 

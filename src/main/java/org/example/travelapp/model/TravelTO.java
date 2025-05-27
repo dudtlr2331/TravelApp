@@ -12,6 +12,6 @@ public class TravelTO {
     private String description;
     private String address;
     private String phone;
-    private double latitude;   // 위도
-    private double longitude;  // 경도
+    private Double  latitude;   // 위도
+    private Double  longitude;  // 경도
 }
