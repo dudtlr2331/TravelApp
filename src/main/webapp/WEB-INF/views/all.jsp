@@ -110,7 +110,7 @@
 
 <jsp:include page="header.jsp" />
 
-<main>
+<main class="result-main">
     <%=sbHtml %>
     <%=listSbHtml %>
 </main>

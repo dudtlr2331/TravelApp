@@ -126,6 +126,12 @@
                 }]
             });
         }
+
+        function scrollNearby(direction) {
+            const container = document.getElementById("nearbySlider");
+            const cardWidth = container.querySelector(".nearby-card").offsetWidth + 16; // 카드 너비 + gap
+            container.scrollLeft += direction * cardWidth * 2; // 2칸씩 이동
+        }
     </script>
 </head>
 <body>
@@ -199,29 +205,6 @@
 </main>
 
 <jsp:include page="footer.jsp" />
-
-<script>
-    document.getElementById('searchForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const keyword = this.keyword.value.trim();
-        const type = this.type.value;
-
-        if (!keyword) {
-            alert("검색어를 입력하세요.");
-            return;
-        }
-
-        window.location.href = "/search/" + type + "/" + encodeURIComponent(keyword);
-    });
-</script>
-
-<script>
-    function scrollNearby(direction) {
-        const container = document.getElementById("nearbySlider");
-        const cardWidth = container.querySelector(".nearby-card").offsetWidth + 16; // 카드 너비 + gap
-        container.scrollLeft += direction * cardWidth * 2; // 2칸씩 이동
-    }
-</script>
 
 </body>
 </html>

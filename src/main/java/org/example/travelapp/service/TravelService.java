@@ -30,7 +30,7 @@ public class TravelService {
     public double[] getCoordinatesFromAddress(String address) {
         try {
             if (address == null || address.trim().isEmpty()) {
-                return null; // 주소가 비었으면 좌표 계산하지 않음!
+                return null;
             }
 
             String encoded = URLEncoder.encode(address, "UTF-8");
@@ -55,6 +55,25 @@ public class TravelService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public double[] getOrUpdateCoordinates(TravelTO place) {
+        Double latObj = place.getLatitude();
+        Double lngObj = place.getLongitude();
+
+        if (latObj != null && lngObj != null && latObj != 0.0 && lngObj != 0.0) {
+            return new double[]{ latObj, lngObj };
+        }
+
+        double[] coords = getCoordinatesFromAddress(place.getAddress());
+        if (coords != null) {
+            dao.updateCoordinates(place.getNo(), coords[0], coords[1]);
+            place.setLatitude(coords[0]);
+            place.setLongitude(coords[1]);
+            return coords;
+        }
+
         return null;
     }
 
@@ -96,28 +115,8 @@ public class TravelService {
         }
     }
 
-    public double[] getOrUpdateCoordinates(TravelTO place) {
-        // 이미 좌표가 있는 경우 그대로 반환
-        if (place.getLatitude() != 0 && place.getLongitude() != 0) {
-            return new double[]{ place.getLatitude(), place.getLongitude() };
-        }
-
-        // 좌표 조회 API 호출
-        double[] coords = getCoordinatesFromAddress(place.getAddress());
-        if (coords != null) {
-            // DB 저장
-            dao.updateCoordinates(place.getNo(), coords[0], coords[1]);
-
-            // 객체에 반영
-            place.setLatitude(coords[0]);
-            place.setLongitude(coords[1]);
-        }
-
-        return coords;
-    }
-
     private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        double R = 6371; // 지구 반지름 (km)
+        double R = 6371;
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
@@ -167,15 +166,13 @@ public class TravelService {
         return dao.travelSearchDistrictLimit(strDistrict);
     }
 
-    public TravelListTO selectAll( int cpage ) {
+    public TravelListTO selectAll(int cpage) {
         int totalRecord = dao.getTotalAll();
         TravelListTO listTO = new TravelListTO();
         listTO.setCpage(cpage);
         listTO.setTotalRecord(totalRecord);
         int startRow = (cpage - 1) * listTO.getRecordPerPage();
-
-        listTO.setBoardLists(dao.selectAll( startRow, listTO.getRecordPerPage()));
-
+        listTO.setBoardLists(dao.selectAll(startRow, listTO.getRecordPerPage()));
         return listTO;
     }
 
@@ -185,9 +182,7 @@ public class TravelService {
         listTO.setCpage(cpage);
         listTO.setTotalRecord(totalRecord);
         int startRow = (cpage - 1) * listTO.getRecordPerPage();
-
         listTO.setBoardLists(dao.searchAllFields(keyword, startRow, listTO.getRecordPerPage()));
         return listTO;
     }
-
 }

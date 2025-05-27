@@ -353,7 +353,7 @@ section.카테고리 .item p {
     box-sizing: border-box;
 }
 
-section.카테고리 .item a {
+a {
     text-decoration: none; /* 밑줄 제거 */
 }
 
@@ -371,6 +371,26 @@ section.카테고리 .item a {
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 6px;
+}
+
+.result-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.searchResult {
+    width: 100%;
+    text-align: left;
+    font-size: 32px;
+    max-width: 1500px;
+}
+.items {
+    max-width: 1500px;
+}
+.pagination {
+    padding-bottom: 30px;
 }
 
 /* 상세 페이지 (detail.jsp) */
@@ -465,4 +485,23 @@ main section div {
 
 .result-description + .result-address {
     margin-top: 20px; /* 원하는 공백 크기로 조정 (예: 5px) */
+}
+
+#district{
+    font-size: 16px;
+    font-weight: 500;
+    color: #3f51b5;
+    background-color: #fcfcff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    height: 36px;
+    line-height: 36px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#district:hover {
+    background-color: #e3ebff;
+    border-color: #90a4ae;
 }
