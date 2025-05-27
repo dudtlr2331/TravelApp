@@ -16,12 +16,12 @@ public class TravelDAO {
     private JdbcTemplate jdbcTemplate;
 
     public List<TravelTO> mainListByTitle() {
-        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY title LIMIT 8";
+        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY title LIMIT 6";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
     }
 
     public List<TravelTO> mainListByDistrict() {
-        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY district LIMIT 8";
+        String sql = "SELECT no, district, title, description, address, phone FROM travel ORDER BY district LIMIT 6";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
     }
 

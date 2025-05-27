@@ -5,7 +5,9 @@
 <header class="main-header">
     <div class="nav-inner">
         <div class="logo">
-            <img src="/images/logo.png" alt="Tripingo 로고">
+            <a href="/main">
+                <img src="/images/logo.png" alt="Tripingo 로고">
+            </a>
         </div>
 
         <nav class="nav-menu">

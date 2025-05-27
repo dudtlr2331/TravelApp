@@ -10,7 +10,7 @@ body {
     line-height: 1.6;
     background-color: #f9f9f9;
     color: #333;
-    padding: 20px 20px 0px 20px;
+    padding: 0px;
 }
 
 /* 헤더 */
@@ -334,6 +334,27 @@ section.카테고리 .item a {
     border: 1px solid #ddd;
     border-radius: 6px;
 }
+
+.result-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.searchResult {
+    width: 100%;
+    text-align: left;
+    font-size: 32px;
+    max-width: 1500px;
+}
+.items {
+    max-width: 1500px;
+}
+.pagination {
+    padding-bottom: 30px;
+}
+
 
 /* 상세 페이지 (detail.jsp) */
 main h2 {

@@ -54,17 +54,7 @@
         System.out.println("startBlock : " + startBlock);
         System.out.println("endBlock : " + endBlock);
         System.out.println("pageperblock : " + pagePerBlock);
-
         listSbHtml.append("<div class='pagination'>");
-
-        if ( startBlock == 1 ) {
-            listSbHtml.append( "<span><a>&lt;&lt;</a></span>" );
-        } else {
-            listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( startBlock - pagePerBlock ) + "'>&lt;&lt;</a></span>" );
-        }
-
-        listSbHtml.append( "&nbsp;" );
-
         if( cpage == 1 ) {
             listSbHtml.append( "<span><a>&lt;</a></span>" );
         } else {
@@ -77,7 +67,7 @@
             if ( i == cpage ) {
                 listSbHtml.append( "<span><a>[ " + i + " ]</a></span>" );
             } else {
-                listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + i + "'> " + i + " </a></span>" );
+                listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + i + "'> &nbsp;" + i + " &nbsp;</a></span>" );
             }
         }
 
@@ -89,14 +79,6 @@
             listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( cpage + 1 )+ "'>&gt;</a></span>" );
         }
 
-        listSbHtml.append( "&nbsp;" );
-
-        if( endBlock == totalPage ) {
-            listSbHtml.append( "<span><a>&gt;&gt;</a></span>" );
-        } else {
-            listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( startBlock + pagePerBlock ) + "'>&gt;&gt;</a></span>" );
-        }
-        listSbHtml.append("</div>");
     }
 %>
 
@@ -106,13 +88,18 @@
     <meta charset="UTF-8">
     <title>검색</title>
     <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body>
+<body style="padding: 0;">
 
 <jsp:include page="header.jsp" />
 
-<main>
-    <h2><%= request.getAttribute("keyword") %> 검색 결과</h2>
+<main class="result-main">
+    <h2 class="searchResult"><%= request.getAttribute("keyword") %> 검색 결과</h2>
 
     <%= sbHtml %>
     <%= listSbHtml %>
