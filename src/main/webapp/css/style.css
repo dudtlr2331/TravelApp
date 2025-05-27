@@ -8,7 +8,7 @@
 body {
     font-family: 'Segoe UI', sans-serif;
     line-height: 1.6;
-    background-color: #f9f9f9;
+    background-color: #fefaf6;
     color: #333;
     padding: 0px;
 }
@@ -40,7 +40,7 @@ header p {
     align-items: center;
     gap: 20px;
     height: 500px;
-    margin-top: 30px;
+    margin-top: 0px;
     z-index: 0;
 }
 
@@ -52,7 +52,7 @@ header p {
     left: 0;
     width: 100%;
     height: 90%;
-    background-color: #ff9962; /* 주황색 */
+    background-color: #f4a261; /* 주황색 -> 감성오렌지로 변경*/
     z-index: -1; /* 슬라이드 뒤로 보내기 */
 }
 

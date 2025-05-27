@@ -2,8 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%--<%@ include file="header.jsp" %>--%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,41 +28,86 @@
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5fd93ba636a2eea37ba2fc966106d44f&libraries=services"></script>
     <script type="text/javascript">
         window.onload = function() {
+            const nearAdd = [];
+            const nearbyInfo = []; // 주변 관광지 이름과 주소 저장 배열
+            <%
+                List<TravelTO> nearbyList = (List<TravelTO>) request.getAttribute("nearbyList");
+                for(TravelTO nearTo : nearbyList){
+                String nearAdd = nearTo.getAddress();
+                String nearTitle = nearTo.getTitle();
+            %>
+            nearAdd.push("<%=nearAdd%>");
+            nearbyInfo.push({ title: "<%=nearTitle%>", address: "<%=nearAdd%>" });
+            <%
+                }
+            %>
+
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                 mapOption = {
                     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표 (초기값)
-                    level: 3 // 지도의 확대 레벨
+                    level: 4 // 지도의 확대 레벨
                 };
-
-            // 지도를 생성합니다
             var map = new kakao.maps.Map(mapContainer, mapOption);
 
-            // 주소-좌표 변환 객체를 생성합니다
             var geocoder = new kakao.maps.services.Geocoder();
+
+            var infoWindow = new kakao.maps.InfoWindow({ // 정보창 생성 (하나의 객체만 생성하여 재사용)
+                removable: false // 닫기 버튼 활성화
+            });
 
             // 주소로 좌표를 검색합니다
             geocoder.addressSearch( '${place.address}' , function(result, status) {
-
-                // 정상적으로 검색이 완료됐으면
                 if (status === kakao.maps.services.Status.OK) {
                     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                     map.setCenter(coords);
-
-                    // 마커를 생성합니다
                     var marker = new kakao.maps.Marker({
                         map: map,
                         position: coords
                     });
 
-                    // 클러스터러에 마커를 추가합니다.
-                    clusterer.addMarker(marker);
+                    // 마커에 mouseover 이벤트 리스너 추가
+                    kakao.maps.event.addListener(marker, 'mouseover', function() {
+                        infoWindow.setContent('<div style="padding:5px; width: 100%;"><b>' + '${place.title}' + '</b><br>${place.address}</div>');
+                        infoWindow.open(map, this);
+                    });
 
+                    // 마커에 mouseout 이벤트 리스너 추가 (선택 사항)
+                    kakao.maps.event.addListener(marker, 'mouseout', function() {
+                        infoWindow.close();
+                    });
+
+                    clusterer.addMarker(marker);
                 } else {
                     console.log("주소 검색 오류:", status);
                 }
             });
+
+            console.log("length : " + nearAdd.length);
+            for(let i = 0; i < nearAdd.length; i++){
+                geocoder.addressSearch(nearAdd[i], function(result, status) {
+                    if(status === kakao.maps.services.Status.OK){
+                        var nearCoords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                        var nearMarker = new kakao.maps.Marker({
+                            map: map,
+                            position: nearCoords
+                        });
+                        console.log("nearAdd : " +(i+1)+ " 번째 : " + nearAdd[i]);
+                        // 마커에 mouseover 이벤트 리스너 추가
+                        kakao.maps.event.addListener(nearMarker, 'mouseover', function() {
+                            infoWindow.setContent('<div style="padding:5px; width: auto;"><b>' + nearbyInfo[i].title + '<b><br>' + nearbyInfo[i].address + '</div>');
+                            infoWindow.open(map, this);
+                        });
+
+                        // 마커에 mouseout 이벤트 리스너 추가 (선택 사항)
+                        kakao.maps.event.addListener(nearMarker, 'mouseout', function() {
+                            infoWindow.close();
+                        });
+                        clusterer.addMarker(nearMarker);
+                    } else {
+                        console.log("주변 주소 검색 오류 : ", status, nearAdd[i]);
+                    }
+                });
+            }
 
             var clusterer = new kakao.maps.MarkerClusterer({
                 map: map,
@@ -73,6 +116,7 @@
                 averageCenter: true,
                 minLevel: 6,
                 disableClickZoom: true,
+                hoverable: true,
                 styles: [{
                     width : '53px', height : '52px',
                     background: 'url(cluster.png) no-repeat',
@@ -121,20 +165,24 @@
 
             <div class="nearby-slider" id="nearbySlider">
                 <%
-                    List<TravelTO> nearbyList = (List<TravelTO>) request.getAttribute("nearbyList");
-                    if (nearbyList != null && !nearbyList.isEmpty()) {
-                        for (TravelTO spot : nearbyList) {
+                    List<TravelTO> nearbyLists = (List<TravelTO>) request.getAttribute("nearbyList");
+                    if (nearbyLists != null && !nearbyLists.isEmpty()) {
+                        for (TravelTO spot : nearbyLists) {
                             int no = spot.getNo();
                             String title = spot.getTitle();
                             String imageUrl = "/images/travel_" + no + ".jpg";
                 %>
                 <div class="nearby-card">
                     <a href="/detail/<%= no %>">
-                        <img src="<%= imageUrl %>"
-                             onerror="this.onerror=null; this.src='/images/default.jpg';"
-                             alt=""
-                             class="nearby-image">
-                        <p class="nearby-title"><%= title %></p>
+                        <img src="<%= imageUrl %>" class="nearby-image" onerror="this.onerror=null; this.src='/images/default.jpg';" alt="">
+
+                        <div class="nearby-text">
+                            <div class="nearby-title-wrapper">
+                                <span class="nearby-title"><%= title %></span>
+                            </div>
+                            <p class="nearby-address"><%= spot.getAddress() %></p>
+                            <p class="nearby-distance"><%= spot.getDescription().split("\\|")[1].trim() %></p>
+                        </div>
                     </a>
                 </div>
                 <%

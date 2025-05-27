@@ -50,6 +50,11 @@ public class TravelDAO {
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(TravelTO.class), no);
     }
 
+    public List<TravelTO> getAllPlaces() {
+        String sql = "SELECT no, district, title, description, address, phone FROM travel";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
+    }
+
     public List<TravelTO> getNearbyByDistrict(String district, int excludeNo) {
         String sql = "SELECT no, title, district, description, address, phone FROM travel WHERE district = ? AND no != ? LIMIT 5";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class), district, excludeNo);

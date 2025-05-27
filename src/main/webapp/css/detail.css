@@ -8,41 +8,9 @@
 body {
     font-family: 'Segoe UI', sans-serif;
     line-height: 1.6;
-    background-color: #f9f9f9;
+    background-color: #fffaf3;
     color: #333;
-    padding: 20px 20px 0px 20px;
-}
-
-
-
-/* 상세 이미지 왼쪽 정렬 */
-.left-image {
-    width: 500px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-left: 24px;
-}
-
-/* 상세 본문 */
-.detail-main {
-    max-width: 1600px;
-    margin: 40px auto;
-    padding: 64px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-}
-
-
-
-/* 이미지 + 텍스트 나란히 정렬 */
-.detail-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 32px;
-    margin-bottom: 40px;
+    padding: 0px;
 }
 
 .left-image {
@@ -50,8 +18,22 @@ body {
     height: 300px;
     object-fit: cover;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.detail-main {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 64px;
+    background-color: #fef6f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.detail-header {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 40px;
 }
 
 .text-info {
@@ -59,9 +41,16 @@ body {
 }
 
 .text-info h1 {
-    font-size: 28px;
-    margin-bottom: 12px;
-    color: #222;
+    font-size: 36px;
+    font-weight: 700;
+    color: #2c2c2c;
+    background-color: #fef6ed;
+    padding: 10px 16px;
+    border-left: 4px solid #f4a261;
+    border-radius: 8px;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+    display: inline-block;
 }
 
 .text-info p {
@@ -70,15 +59,12 @@ body {
     color: #555;
 }
 
-/* 제목 */
 .detail-main h2 {
     font-size: 28px;
     color: #222;
-    margin-top: 0;
-    margin-bottom: 16px;
+    margin: 0 0 16px;
 }
 
-/* 기본 정보 */
 .detail-main p {
     font-size: 16px;
     color: #555;
@@ -86,24 +72,31 @@ body {
     line-height: 1.6;
 }
 
-/* 상세 정보 섹션 */
 .detail-main section h3 {
-    clear: both;
-    font-size: 20px;
-    color: #333;
-    margin-top: 48px;
-    margin-bottom: 16px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #222;
+    background-color: #fdf1e8;
+    padding: 10px 16px;
+    border-left: 4px solid #f4a261;
+    border-radius: 6px;
+    margin: 48px 0 16px;
+    letter-spacing: -0.5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    display: inline-block;
 }
 
 .detail-main section p {
-    font-size: 16px;
-    color: #444;
+    font-size: 17px;
+    line-height: 1.9;
+    color: #333;
+    letter-spacing: -0.2px;
+    word-spacing: 1px;
     white-space: pre-wrap;
-    line-height: 1.8;
-    margin-top: 0;
+    text-align: left;
+    margin-bottom: 16px;
 }
 
-/* 주변 관광지 전체 슬라이드 스타일 */
 .nearby-slider-wrapper {
     position: relative;
     overflow: hidden;
@@ -117,24 +110,30 @@ body {
     scroll-behavior: smooth;
     gap: 16px;
     padding: 8px 0;
-    margin-left: 16px;
-    margin-right: 16px;
+    margin: 0 16px;
 }
-/* 관광지 카드 하나 */
+
 .nearby-card {
-    width: 400px;
+    width: 320px;
     flex-shrink: 0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    border: 1px solid #f0eae0;
     border-radius: 8px;
     overflow: hidden;
     text-align: center;
-    background-color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.nearby-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
 .nearby-card a {
     text-decoration: none;
 }
 
-/* 카드 안 이미지 */
 .nearby-image {
     width: 100%;
     height: 220px;
@@ -142,29 +141,70 @@ body {
     border-radius: 8px 8px 0 0;
 }
 
-/* 카드 아래 텍스트 */
-.nearby-title {
-    margin: 8px 0;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    padding: 0 8px;
-    text-decoration-line: none;
+.nearby-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1px;
+    padding-top: 6px;
+    text-align: center;
 }
 
-/* 좌우 화살표 버튼 */
+.nearby-title-wrapper {
+    width: 180px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.nearby-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin: 0 auto;
+}
+
+.nearby-address {
+    font-size: 18px;
+    color: #666;
+    margin: 2px 0 0;
+    white-space: normal;
+    word-break: keep-all;
+    line-height: 1.4;
+}
+
+.nearby-distance {
+    font-size: 18px;
+    font-weight: 500;
+    color: #007bff !important;
+    margin: 2px 0 0;
+    text-align: center;
+}
+
 .arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: white;
+    background-color: #f7b267;
     border: none;
-    font-size: 24px;
+    color: #fff;
+    font-size: 20px;
     cursor: pointer;
     z-index: 10;
-    padding: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 8px 10px;
     border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    transition: all 0.2s ease;
+}
+
+.arrow:hover {
+    background-color: #f4a261;
+    color: #fff;
 }
 
 .arrow.left {
@@ -174,7 +214,7 @@ body {
 .arrow.right {
     right: 12px;
 }
-/* 푸터 */
+
 .site-footer {
     padding: 16px;
     text-align: center;
@@ -185,4 +225,18 @@ body {
 .site-footer img {
     width: 200px;
     margin-top: 10px;
+}
+
+#nearbySlider::-webkit-scrollbar {
+    height: 8px;
+}
+
+#nearbySlider::-webkit-scrollbar-track {
+    background: #fffaf3;
+}
+
+#nearbySlider::-webkit-scrollbar-thumb {
+    background-color: #f4a261;
+    border-radius: 10px;
+    border: 1px solid #fffaf3;
 }

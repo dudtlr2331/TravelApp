@@ -92,8 +92,9 @@ public class TravelController {
         TravelTO to = service.getDetail(no);
         model.addAttribute("place", to);
 
-        // 2. 지역 기반 주변 관광지 추가
-        List<TravelTO> nearbyList = service.getNearbyByDistrict(to.getDistrict(), no);
+        // 2. Kakao 기반 거리순 주변 관광지 정렬
+        List<TravelTO> allPlaces = service.getAllPlaces(); // 모든 관광지 DB에서 가져오기
+        List<TravelTO> nearbyList = service.getNearbyPlacesSortedByDistance(to, allPlaces); // 20km 이내 + 거리순
         model.addAttribute("nearbyList", nearbyList);
 
         // 3. 검색어가 있을 경우 검색 결과도 추가
