@@ -33,13 +33,6 @@ public class TravelListTO {
         int block = (int)Math.ceil((double)this.cpage / this.pagePerBlock);
         this.startBlock = (block - 1) * this.pagePerBlock + 1;
         this.endBlock = Math.min(startBlock + this.pagePerBlock - 1, this.totalPage);
-
-        System.out.println("pagePerBlock : " + pagePerBlock);
-        System.out.println("recordPerPage : " + recordPerPage);
-        System.out.println("totalRecord : " + totalRecord);
-        System.out.println("totalPage :"+ totalPage);
-        System.out.println("startBlock : " + startBlock);
-        System.out.println("endBlock : " + endBlock);
     }
 }
 

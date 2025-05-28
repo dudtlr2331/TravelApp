@@ -24,16 +24,17 @@
 
 .nav-inner {
     width: 100%;
-    max-width: 1440px;
+    height: 100px;
+    max-width: 1280px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 64px;
+    padding: 0px;
 }
 
 
 .logo img {
-    height: 200px;
+    height: 75px;
 }
 
 .logo {

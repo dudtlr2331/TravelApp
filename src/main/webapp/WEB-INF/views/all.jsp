@@ -8,13 +8,12 @@
     TravelListTO listTO = (TravelListTO) request.getAttribute("lists");
     List<TravelTO> lists = (List<TravelTO>) listTO.getBoardLists();
 
-
     StringBuilder sbHtml = new StringBuilder();
 
     if (lists != null && !lists.isEmpty()) {
         for (TravelTO to : lists) {
             // 검색 키워드에 알맞는 이미지를 가져오기 위한 url 설정
-            String imageUrl = "/images/travel_" + to.getNo() + ".jpg"; // 예: travel_1.jpg
+            String imageUrl = "/images/travel_" + to.getNo() + ".jpg";
 
             // 전체를 감싸는 wrapper div
             sbHtml.append("<div class='items'>");
@@ -39,7 +38,6 @@
     }
 
     StringBuilder listSbHtml = new StringBuilder();
-
 
     if(listTO != null && listTO.getTotalRecord() > 0){
         int totalPage = listTO.getTotalPage();
@@ -116,8 +114,6 @@
 </main>
 
 <jsp:include page="footer.jsp" />
-
-<%-- 검색 결과를 전송하기 위한 js 사용--%>
 <script src="/js/search.js"></script>
 </body>
 </html>

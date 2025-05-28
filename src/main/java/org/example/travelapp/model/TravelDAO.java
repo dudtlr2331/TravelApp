@@ -25,7 +25,7 @@ public class TravelDAO {
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
     }
 
-    public List<TravelTO> getTopSlides() {  /* 메인 슬라이드 영역 */
+    public List<TravelTO> getTopSlides() {
         String sql = "SELECT no, title, description FROM travel ORDER BY no LIMIT 6";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(TravelTO.class));
     }

@@ -9,13 +9,60 @@
   <meta charset="UTF-8">
   <title>메인</title>
   <link rel="stylesheet" href="../../css/style.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script>
+    document.addEventListener( "DOMContentLoaded", function () {
+      const select = document.getElementById("district");
+      const link = document.getElementById("moreLink");
 
-  <script type="text/javascript">
+      link.href = "/search/district/" + encodeURIComponent(select.value);
 
+      select.addEventListener("change", function () {
+        const selected = this.value;
+
+        link.href = "/search/district/" + encodeURIComponent(selected);
+
+        $.ajax({
+          url: "api/district/" + encodeURIComponent(selected),
+          method: "GET",
+          dataType: "json",
+          success: function (data) {
+            const $list = $("#result");
+            $list.empty();
+
+            if (data.length == 0) {
+              $list.append("<p>해당 지역에 관광지가 없습니다.</p>");
+            } else {
+              data.forEach(function (item) {
+                const split = item.title.split(" ", 2);
+                const region = split.length > 1 ? split[0] : "";
+                const title = split.length > 1 ? split[1] : item.title;
+                const imageUrl = "/images/travel_" + item.no + ".jpg";
+
+                $("#result").append(
+                        "<div class='item'>" +
+                        "<a href='/detail/" + item.no + "'>" +
+                        "<img src='" + imageUrl + "' onerror=\"this.src='/images/default.jpg'\">" +
+                        "<p class='region'>" + region + "</p>" +
+                        "<p class='title'>" + title + "</p>" +
+                        "</a>" +
+                        "</div>"
+                );
+
+              });
+            }
+
+          },
+          error: function () {
+            alert("[에러]");
+          }
+        });
+      });
+    });
   </script>
-
 </head>
 <body>
+
 <jsp:include page="header.jsp" />
 
 <section id="슬라이드">
@@ -42,7 +89,7 @@
       List<TravelTO> titleList = (List<TravelTO>) request.getAttribute("titleList");
       if (titleList != null) {
         for (TravelTO to : titleList) {
-          String imageUrl = "/images/travel_" + to.getNo() + ".jpg"; // 예: travel_1.jpg
+          String imageUrl = "/images/travel_" + to.getNo() + ".jpg";
     %>
     <div class="item">
       <a href="/detail/<%= to.getNo() %>">
@@ -65,8 +112,6 @@
   </div>
 </section>
 
-
-<!-- -->
 <section class="카테고리">
   <h2>
     지역 :
@@ -78,7 +123,6 @@
       <option value="제주권">제주권</option>
       <option value="충청권">충청권</option>
     </select>
-
   </h2>
 
   <div class="items" id="result">
@@ -112,60 +156,6 @@
 </section>
 
 <jsp:include page="footer.jsp" />
-
 <script src="/js/search.js"></script>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-<script>
-  document.addEventListener( "DOMContentLoaded", function () {
-    const select = document.getElementById("district");
-    const link = document.getElementById("moreLink");
-
-    link.href = "/search/district/" + encodeURIComponent(select.value);
-
-    select.addEventListener("change", function () {
-      const selected = this.value;
-
-      link.href = "/search/district/" + encodeURIComponent(selected);
-
-      $.ajax({
-        url: "api/district/" + encodeURIComponent(selected),
-        method: "GET",
-        dataType: "json",
-        success: function (data) {
-          const $list = $("#result");
-          $list.empty();
-
-          if (data.length == 0) {
-            $list.append("<p>해당 지역에 관광지가 없습니다.</p>");
-          } else {
-            data.forEach(function (item) {
-              const split = item.title.split(" ", 2);
-              const region = split.length > 1 ? split[0] : "";
-              const title = split.length > 1 ? split[1] : item.title;
-              const imageUrl = "/images/travel_" + item.no + ".jpg";
-
-              $("#result").append(
-                      "<div class='item'>" +
-                      "<a href='/detail/" + item.no + "'>" +
-                      "<img src='" + imageUrl + "' onerror=\"this.src='/images/default.jpg'\">" +
-                      "<p class='region'>" + region + "</p>" +
-                      "<p class='title'>" + title + "</p>" +
-                      "</a>" +
-                      "</div>"
-              );
-
-            });
-          }
-
-        },
-        error: function () {
-          alert("[에러]");
-        }
-      });
-    });
-
-  });
-</script>
 </body>
 </html>

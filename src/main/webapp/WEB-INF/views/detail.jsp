@@ -8,23 +8,6 @@
     <meta charset="UTF-8">
     <title>상세정보</title>
     <link rel="stylesheet" href="../../css/detail.css">
-    <style type="text/css">
-        .map_wrap, .map_wrap * {
-            margin:0;
-            padding:0;
-            font-family:'Malgun Gothic',dotum,sans-serif;
-            font-size:12px;
-        }
-        .map_wrap a, .map_wrap a:hover, .map_wrap a:active{
-            color:#000;
-            text-decoration: none;
-        }
-        .map_wrap {
-            position:relative;
-            width:100%;
-            height:350px; /* 지도의 높이 설정 */
-        }
-    </style>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5fd93ba636a2eea37ba2fc966106d44f&libraries=services"></script>
     <script type="text/javascript">
         window.onload = function() {
@@ -139,7 +122,6 @@
 <jsp:include page="header.jsp" />
 
 <main class="detail-main">
-
     <div class="detail-header">
         <img src="/images/travel_${place.no}.jpg"
              class="left-image"

@@ -7,9 +7,7 @@ footer {
     font-size: 14px;
     line-height: 1.6;
     border-top: 1px solid #444;
-
-    width: 100vw;                   /* 전체 너비 */
-    margin-left: calc(-50vw + 50%); /* 좌우 여백 보정 */
+    margin-left: calc(-50vw + 50%);
 }
 
 .info p {

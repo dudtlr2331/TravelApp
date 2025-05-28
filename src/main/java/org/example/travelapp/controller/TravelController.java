@@ -26,15 +26,13 @@ public class TravelController {
 
         model.addAttribute("titleList", titleList);
         model.addAttribute("districtList", districtList);
-
         return "main";
     }
 
-    // 메인 슬라이드 영역
     @GetMapping("/api/slider")
     @ResponseBody
     public List<Map<String, Object>> getSliderData() {
-        List<TravelTO> list = service.getTopSlides(); // DAO에서 상위 5~6개 가져오도록
+        List<TravelTO> list = service.getTopSlides();
         List<Map<String, Object>> response = new ArrayList<>();
 
         for (TravelTO to : list) {
@@ -58,29 +56,6 @@ public class TravelController {
         return "search";
     }
 
-    @GetMapping("/search/{type}/{keyword}")
-    public String search(
-            @PathVariable("type") String type,
-            @PathVariable("keyword") String keyword,
-            Model model) {
-
-        List<TravelTO> lists;
-
-        if (type.equals("title")) {
-            lists = service.searchByTitle(keyword);
-        } else if (type.equals("district")) {
-            lists = service.searchDistrict(keyword);
-        } else if (type.equals("description")) {
-            lists = service.searchDescription(keyword);
-        }else {
-            lists = new ArrayList<>();
-        }
-
-        model.addAttribute("lists", lists);
-        model.addAttribute("keyword", keyword);
-        return "search";
-    }
-
     @RequestMapping("/detail/{no}")
     public String detail(
             @PathVariable("no") int no,
@@ -88,16 +63,16 @@ public class TravelController {
             @RequestParam(required = false) String keyword,
             Model model) {
 
-        // 1. 상세 정보 조회
+        // 상세 정보 조회
         TravelTO to = service.getDetail(no);
         model.addAttribute("place", to);
 
-        // 2. Kakao 기반 거리순 주변 관광지 정렬
+        // Kakao 기반 거리순 주변 관광지 정렬
         List<TravelTO> allPlaces = service.getAllPlaces(to.getDistrict()); // 모든 관광지 DB에서 가져오기
-        List<TravelTO> nearbyList = service.getNearbyPlacesSortedByDistance(to, allPlaces); // 20km 이내 + 거리순
+        List<TravelTO> nearbyList = service.getNearbyPlacesSortedByDistance(to, allPlaces); // 20km 이내 거리순
         model.addAttribute("nearbyList", nearbyList);
 
-        // 3. 검색어가 있을 경우 검색 결과도 추가
+        // 검색어가 있을 경우 검색 결과도 추가
         if (keyword != null && !keyword.isEmpty()) {
             List<TravelTO> results;
 
@@ -119,8 +94,8 @@ public class TravelController {
     @RequestMapping( "/all" )
     public String all( @RequestParam(value = "cpage", defaultValue="1") int cpage, Model model ) {
         TravelListTO lists = service.selectAll( cpage );
-        model.addAttribute("lists", lists);
 
+        model.addAttribute("lists", lists);
         return "all";
     }
 

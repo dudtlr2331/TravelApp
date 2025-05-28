@@ -41,7 +41,6 @@
 
     StringBuilder listSbHtml = new StringBuilder();
 
-
     if(listTO != null && listTO.getTotalRecord() > 0){
         int totalPage = listTO.getTotalPage();
         int startBlock = listTO.getStartBlock();
@@ -49,11 +48,6 @@
         int cpage = listTO.getCpage();
         int pagePerBlock = listTO.getPagePerBlock();
 
-        System.out.println("cpage : " + cpage);
-        System.out.println("totalPage : " + totalPage);
-        System.out.println("startBlock : " + startBlock);
-        System.out.println("endBlock : " + endBlock);
-        System.out.println("pageperblock : " + pagePerBlock);
         listSbHtml.append("<div class='pagination'>");
         if( cpage == 1 ) {
             listSbHtml.append( "<span><a>&lt;</a></span>" );
@@ -78,7 +72,6 @@
         } else {
             listSbHtml.append( "<span><a href='/search/all/" + keyword + "?cpage=" + ( cpage + 1 )+ "'>&gt;</a></span>" );
         }
-
     }
 %>
 
@@ -88,11 +81,6 @@
     <meta charset="UTF-8">
     <title>검색</title>
     <link rel="stylesheet" href="../../css/style.css">
-    <style>
-        a {
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body style="padding: 0;">
 
@@ -100,14 +88,11 @@
 
 <main class="result-main">
     <h2 class="searchResult"><%= request.getAttribute("keyword") %> 검색 결과</h2>
-
     <%= sbHtml %>
     <%= listSbHtml %>
 </main>
 
 <jsp:include page="footer.jsp" />
-
-<%-- 검색 결과를 전송하기 위한 js 사용--%>
 <script src="/js/search.js"></script>
 </body>
 </html>
